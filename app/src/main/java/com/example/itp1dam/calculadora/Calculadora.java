@@ -6,11 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Calculadora extends AppCompatActivity implements View.OnClickListener {
 
     private double n1;
     private double n2;
+    private char op;
+    String entradatxt;
+    String resultadotxt;
     private TextView entrada;
     private TextView resultado;
     private ImageButton bLast;
@@ -82,8 +86,28 @@ public class Calculadora extends AppCompatActivity implements View.OnClickListen
 
     }
 
+    public void borrar(){
+        entrada.setText(null);
+        resultado.setText(null);
+        entradatxt=null;
+        resultadotxt=null;
+        n1=0;
+        n2=0;
+        op=' ';
+    }
+
     @Override
     public void onClick(View v){
+        entradatxt = String.valueOf(entrada.getText());
+        resultadotxt = String.valueOf(resultado.getText());
+        if (!entradatxt.isEmpty())
+            try {
+                n1 = Double.parseDouble(entradatxt);
+            }catch (NumberFormatException ex){
+                entrada.setText("");
+                resultado.setText("");
+            }
+
         switch (v.getId()){
             case R.id.b0:
                     entrada.append("0");
@@ -116,13 +140,36 @@ public class Calculadora extends AppCompatActivity implements View.OnClickListen
                 	entrada.append("9");
                 break;
             case R.id.bC:
-                entrada.setText("");
-                resultado.setText("");
+                borrar();
                 break;
             case R.id.bSumar:
-                n1=Integer.parseInt(String.valueOf(entrada.getText()));
-                resultado.setText("+ "+entrada.getText());
-                entrada.setText("");
+                if (op!='+') {
+                    if (!entradatxt.isEmpty() && entradatxt != null) {
+                        n2 = n1;
+                        op = '+';
+                        resultado.setText("+ " + entradatxt);
+                        entrada.setText("");
+                    }
+                } else {
+                    entrada.setText(n1 + "" + op + "" + n2 + "=" + (n1 + n2));
+                    resultado.setText("");
+                }
+                break;
+            case R.id.bLast:
+                Toast toast2 =
+                        Toast.makeText(getApplicationContext(),
+                                n1+" "+op+" "+n2+"="+(n1+op+n2), Toast.LENGTH_SHORT);
+                toast2.show();
+                break;
+            case R.id.bBack:
+                if (!entradatxt.isEmpty() && entradatxt!=null) {
+                    entrada.setText(entradatxt.substring(0, entradatxt.length() - 1));
+                }
+                break;
+            case R.id.bDecimal:
+                if (!entradatxt.isEmpty() && entradatxt!=null && !entradatxt.contains(".")) {
+                    entrada.setText(entradatxt+".");
+                }
                 break;
 
         }

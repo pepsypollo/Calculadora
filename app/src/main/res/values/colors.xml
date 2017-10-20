@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    //Barra app
     <color name="colorPrimary">#3F51B5</color>
+    //Barra estado
     <color name="colorPrimaryDark">#303F9F</color>
+    //Color titulo?
     <color name="colorAccent">#FF4081</color>
 
     <color name="darkGray">#1c1c1c</color>

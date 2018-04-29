@@ -1,18 +1,29 @@
 package com.example.itp1dam.calculadora;
 
+import android.content.Intent;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.support.design.widget.NavigationView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Calculadora extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+
+public class Calculadora extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener  {
 
     private double n1;
     private double n2;
-    private char op;
+    private char op=' ';
+    private String last;
     String entradatxt;
     String resultadotxt;
     private TextView entrada;
@@ -36,11 +47,29 @@ public class Calculadora extends AppCompatActivity implements View.OnClickListen
     private Button bMulti;
     private Button bResult;
     private Button bDecimal;
+    private Button bResto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculadora);
+        setContentView(R.layout.activity_main);
+
+        BDOperaciones bd = new BDOperaciones(this);
+        if(bd.getReadableDatabase()!=null)
+            bd.insertarValores();
+        bd.cerrarBD();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         entrada=(TextView)findViewById(R.id.entrada);
         resultado=(TextView)findViewById(R.id.resultado);
@@ -63,6 +92,7 @@ public class Calculadora extends AppCompatActivity implements View.OnClickListen
         bMulti=(Button)findViewById(R.id.bMulti);
         bResult=(Button)findViewById(R.id.bResult);
         bDecimal=(Button)findViewById(R.id.bDecimal);
+        bResto=(Button)findViewById(R.id.bResto);
 
         bLast.setOnClickListener(this);
         bBack.setOnClickListener(this);
@@ -83,9 +113,55 @@ public class Calculadora extends AppCompatActivity implements View.OnClickListen
         bMulti.setOnClickListener(this);
         bResult.setOnClickListener(this);
         bDecimal.setOnClickListener(this);
+        bResto.setOnClickListener(this);
 
     }
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.nav_hDivisiones) {
+            Intent intent = new Intent(this, Historial.class);
+            intent.putExtra("op", "/");
+            startActivity(intent);
+        } else if (id == R.id.nav_hProductos) {
+            Intent intent = new Intent(this, Historial.class);
+            intent.putExtra("op", "*");
+            startActivity(intent);
+        } else if (id == R.id.nav_hRestas) {
+            Intent intent = new Intent(this, Historial.class);
+            intent.putExtra("op", "-");
+            startActivity(intent);
+        } else if (id == R.id.nav_hRestos) {
+            Intent intent = new Intent(this, Historial.class);
+            intent.putExtra("op", "/%");
+            startActivity(intent);
+        } else if (id == R.id.nav_hSumas) {
+            Intent intent = new Intent(this, Historial.class);
+            intent.putExtra("op", "+");
+            startActivity(intent);
+        } else if (id == R.id.nav_hTodo) {
+            Intent intent = new Intent(this, Historial.class);
+            intent.putExtra("op", "%");
+            startActivity(intent);
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
     public void borrar(){
         entrada.setText(null);
         resultado.setText(null);
@@ -143,23 +219,28 @@ public class Calculadora extends AppCompatActivity implements View.OnClickListen
                 borrar();
                 break;
             case R.id.bSumar:
-                if (op!='+') {
-                    if (!entradatxt.isEmpty() && entradatxt != null) {
-                        n2 = n1;
-                        op = '+';
-                        resultado.setText("+ " + entradatxt);
-                        entrada.setText("");
-                    }
-                } else {
-                    entrada.setText(n1 + "" + op + "" + n2 + "=" + (n1 + n2));
-                    resultado.setText("");
-                }
+                op='+';
+                operacion();
+                break;
+            case R.id.bRestar:
+                op='-';
+                operacion();
+                break;
+            case R.id.bMulti:
+                op='*';
+                operacion();
+                break;
+            case R.id.bDividir:
+                op='/';
+                operacion();
+                break;
+            case R.id.bResto:
+                op='%';
+                operacion();
                 break;
             case R.id.bLast:
-                Toast toast2 =
-                        Toast.makeText(getApplicationContext(),
-                                n1+" "+op+" "+n2+"="+(n1+op+n2), Toast.LENGTH_SHORT);
-                toast2.show();
+                Toast toast = Toast.makeText(getApplicationContext(), last, Toast.LENGTH_SHORT);
+                toast.show();
                 break;
             case R.id.bBack:
                 if (!entradatxt.isEmpty() && entradatxt!=null) {
@@ -171,7 +252,44 @@ public class Calculadora extends AppCompatActivity implements View.OnClickListen
                     entrada.setText(entradatxt+".");
                 }
                 break;
+            case R.id.bResult:
+                if(op!=' ') {
+                    double resul = 0;
+                    resultado.setText(resultadotxt + entradatxt);
+                    switch (op) {
+                        case '+':
+                            resul = n1 + n2;
+                            break;
+                        case '-':
+                            resul = n1 - n2;
+                            break;
+                        case '*':
+                            resul = n1 * n2;
+                            break;
+                        case '/':
+                            resul = n1 / n2;
+                            break;
+                        case '%':
+                            resul = n1 % n2;
+                            break;
+                    }
+                    BDOperaciones bd = new BDOperaciones(this);
+                    bd.insertarOperacion(""+op,n1,n2,resul);
+                    entrada.setText("" + resul);
+                    last = "Última operación:"+n2 + " " + op + " " + n1 + "=" + resul;
+                    op = ' ';
 
+                }
+                break;
+
+        }
+    }
+
+    public void operacion(){
+        if (!entradatxt.isEmpty() && entradatxt != null) {
+            n2 = n1;
+            resultado.setText(entradatxt+op);
+            entrada.setText("");
         }
     }
 }

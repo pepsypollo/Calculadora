@@ -5,6 +5,7 @@
     style="@style/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="50dp"
     android:orientation="vertical"
     android:weightSum="5"
     tools:context="com.example.itp1dam.calculadora.Calculadora">
@@ -41,9 +42,11 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_gravity="top|center"
+        android:layout_gravity="top|center_vertical|center_horizontal|center"
+        android:layout_margin="10dp"
         android:layout_weight="3"
         android:columnCount="4"
+        android:foregroundGravity="center_vertical"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -57,6 +60,7 @@
             android:layout_gravity="fill_horizontal|center"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             app:srcCompat="@drawable/comment_alert" />
 
         <ImageButton
@@ -69,6 +73,7 @@
             android:layout_gravity="fill_horizontal|center"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             app:srcCompat="@drawable/backspace" />
 
         <Button
@@ -81,6 +86,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="C"
             android:textColor="@color/darkYellow" />
 
@@ -94,6 +100,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="/" />
 
 
@@ -107,6 +114,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="%" />
 
         <Space
@@ -116,7 +124,8 @@
             android:layout_columnWeight="0"
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
-            android:layout_rowWeight="1" />
+            android:layout_rowWeight="1"
+            android:foregroundGravity="center" />
 
         <Space
             android:layout_width="wrap_content"
@@ -125,7 +134,8 @@
             android:layout_columnWeight="0"
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
-            android:layout_rowWeight="1" />
+            android:layout_rowWeight="1"
+            android:foregroundGravity="center" />
 
         <Button
             android:id="@+id/bMulti"
@@ -137,6 +147,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="X" />
 
         <Button
@@ -149,6 +160,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="7" />
 
         <Button
@@ -161,6 +173,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="8" />
 
         <Button
@@ -173,6 +186,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="9" />
 
         <Button
@@ -185,6 +199,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="-" />
 
         <Button
@@ -197,6 +212,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="4" />
 
         <Button
@@ -209,6 +225,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="5" />
 
         <Button
@@ -221,6 +238,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="6" />
 
         <Button
@@ -233,6 +251,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="+" />
 
         <Button
@@ -245,6 +264,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="1" />
 
         <Button
@@ -257,6 +277,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="2" />
 
         <Button
@@ -269,6 +290,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="3" />
 
         <Button
@@ -278,9 +300,10 @@
             android:layout_height="wrap_content"
             android:layout_columnSpan="1"
             android:layout_columnWeight="0"
-            android:layout_gravity="fill_vertical"
+            android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="2"
             android:layout_rowWeight="2"
+            android:foregroundGravity="center"
             android:text="=" />
 
         <Button
@@ -293,6 +316,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="0" />
 
         <Button
@@ -305,6 +329,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_rowSpan="1"
             android:layout_rowWeight="1"
+            android:foregroundGravity="center"
             android:text="." />
 
 

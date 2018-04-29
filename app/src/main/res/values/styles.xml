@@ -11,17 +11,30 @@
     <style name="main">
         <item name="android:background">@color/lightGray</item>
     </style>
+
     <style name="normal">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@color/lightGray</item>
     </style>
+
     <style name="altColor">
         <item name="android:textColor">@color/blue</item>
         <item name="android:background">@color/darkGray</item>
     </style>
+
     <style name="texto">
         <item name="android:gravity">right</item>
         <item name="android:textAlignment">gravity</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_hSumas"
+            android:icon="@drawable/op_suma"
+            android:title="Historial de sumas" />
+        <item
+            android:id="@+id/nav_hRestas"
+            android:icon="@drawable/op_resta"
+            android:title="Historial de restas" />
+        <item
+            android:id="@+id/nav_hProductos"
+            android:icon="@drawable/op_producto"
+            android:title="Historial de productos" />
+        <item
+            android:id="@+id/nav_hDivisiones"
+            android:icon="@drawable/op_division"
+            android:title="Historial de divisiones" />
+        <item
+            android:id="@+id/nav_hRestos"
+            android:icon="@drawable/op_resto"
+            android:title="Historial de restos" />
+        <item
+            android:id="@+id/nav_hTodo"
+            android:icon="@drawable/op_total"
+            android:title="Historial de todo" />
+    </group>
+
+</menu>
